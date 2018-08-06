@@ -13,6 +13,21 @@
             <hr>
             <el-button round icon="el-icon-edit-outline" type="submit" @click="getlogin" action="/list">Log In</el-button>
             <el-button round icon="el-icon-circle-plus-outline" type="submit" @click="signup" action="/signup">Signup</el-button>
+            <el-popover
+                placement="top"
+                width="500"
+                v-model="visible2">
+                <p><b>Edit fields :</b></p>
+                    <div style="text-align: right; margin: 0">
+                        <el-input v-model="username" placeholder="Username"></el-input>
+                        <hr>
+                        <el-input type="password" v-model="password" placeholder="Password"></el-input>
+                        <hr>
+                        <el-button type="primary" size="mini" @click="visible2 = false">confirm</el-button>
+                        <el-button size="mini" @click="visible2 = false">cancel</el-button>
+                    </div>
+                <el-button round icon="el-icon-info" slot="reference">Delete</el-button>
+            </el-popover> 
         </el-form>
       </div>
     </div>
@@ -29,7 +44,8 @@
         username:"",
         password:"",
         admin:"",
-        Token:""        
+        Token:"",
+        visible2: false,     
       };
     },
     methods: {
