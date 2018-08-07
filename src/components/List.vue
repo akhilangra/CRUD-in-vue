@@ -9,16 +9,10 @@
     <hr>
         <el-table
         width="100%"
-        border="solid"
             :data="users">
             <el-table-column
                 prop="public_id"
                 label="Id"
-                width="150">
-            </el-table-column>
-            <el-table-column
-                v-model="user"
-                label="Admin"
                 width="150">
             </el-table-column>
             <el-table-column
@@ -35,7 +29,25 @@
                 label="Operations"
                 width="150">
               <template slot-scope="props">
-                  <el-button icon="el-icon-edit" @click="editdata(props.row.public_id)" type="text" size="small">Edit</el-button>
+                  <button type="button" size="small" class="btn btn-info" data-toggle="modal" data-target="#myModal">Edit</button>
+                   <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Edit Fields :</h4>
+                            </div>
+                            <div class="modal-body">
+                              <el-input v-model="username" placeholder="Username"></el-input>
+                              <el-input type="password" v-model="password" placeholder="Password"></el-input>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" @click="getedit(props.row.public_id,username,password)" class="btn btn-default" data-dismiss="modal">Confirm</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                        </div>
+                   </div>
                   <el-button icon="el-icon-delete" @click="deletedata(props.row.public_id)" type="text" size="small">Delete</el-button>
               </template>
             </el-table-column>
@@ -59,6 +71,15 @@ export default {
   },
 
   methods: {
+      getedit(index,user,pass) {
+        console.log(index,user,pass)
+        var body = {name:user, password:pass}
+        Axios.put('/user/' + index, body)
+              .then((response)=>{
+              console.log(response)
+              this.fetchdata()
+       })  
+      },
       logout() {
              this.$router.push({ path: '/' });
        },
